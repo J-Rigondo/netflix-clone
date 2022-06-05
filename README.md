@@ -2,6 +2,10 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## Movie Data
+[Cick Link](https://developers.themoviedb.org)\
+set API_KEY in .env file
+
 ## Available Scripts
 
 In the project directory, you can run:

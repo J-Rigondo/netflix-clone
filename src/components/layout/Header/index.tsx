@@ -34,7 +34,6 @@ const Header = () => {
     });
   }, [scrollY, navAnimation]);
 
-  console.log(homeMatch, tvMatch);
   return (
     <Nav animate={navAnimation} initial={{ backgroundColor: 'rgba(0,0,0,0)' }}>
       <Col>
