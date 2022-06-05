@@ -16,4 +16,9 @@ export const theme: DefaultTheme = {
 
 export const GlobalStyle = createGlobalStyle`
   ${reset}
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
 `;
