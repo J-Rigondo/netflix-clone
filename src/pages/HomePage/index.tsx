@@ -11,6 +11,9 @@ import {
   Row,
   Slider,
   rowVariants,
+  boxVariants,
+  BoxInfo,
+  boxInfoVariants,
 } from './styled';
 import { makeImagePath } from 'lib/utils/common';
 import { AnimatePresence } from 'framer-motion';
@@ -63,9 +66,16 @@ const HomePage = () => {
           >
             {sliderMovies.map((movie) => (
               <Box
+                variants={boxVariants}
+                initial="normal"
+                whileHover="hover"
                 key={movie.id}
                 bgphoto={makeImagePath(movie.backdrop_path, 'w500')}
-              />
+              >
+                <BoxInfo variants={boxInfoVariants}>
+                  <h4>{movie.title}</h4>
+                </BoxInfo>
+              </Box>
             ))}
           </Row>
         </AnimatePresence>

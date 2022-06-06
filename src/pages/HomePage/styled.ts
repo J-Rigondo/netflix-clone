@@ -40,7 +40,7 @@ export const Overview = styled.p`
 
 export const Slider = styled.div`
   position: relative;
-  top: -20%;
+  top: -16%;
 `;
 
 export const rowVariants = {
@@ -63,10 +63,55 @@ export const Row = styled(motion.div)`
   width: 100%;
 `;
 
+export const boxVariants = {
+  normal: {
+    scale: 1,
+  },
+  hover: {
+    scale: 1.3,
+    zIndex: 99,
+    y: -50,
+    transition: {
+      delay: 0.5,
+    },
+  },
+};
+
 export const Box = styled(motion.div)<{ bgphoto: string }>`
+  position: relative;
   background-color: white;
   height: 200px;
   background-image: url(${(props) => props.bgphoto});
   background-size: cover;
   background-position: center center;
+  &:hover {
+    cursor: pointer;
+  }
+  &:first-child {
+    transform-origin: bottom left;
+  }
+  &:last-child {
+    transform-origin: bottom right;
+  }
+`;
+
+export const boxInfoVariants = {
+  hover: {
+    opacity: 1,
+    transition: { delay: 0.5 },
+  },
+};
+
+export const BoxInfo = styled(motion.div)`
+  position: absolute;
+  padding: 10px;
+  background-color: ${(props) => props.theme.black.lighter};
+  opacity: 0;
+  width: 100%;
+  bottom: 0;
+  h4 {
+    text-align: center;
+    font-size: 16px;
+    color: white;
+  }
 `;
