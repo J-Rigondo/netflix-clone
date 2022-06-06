@@ -14,13 +14,22 @@ import {
   boxVariants,
   BoxInfo,
   boxInfoVariants,
+  Overlay,
+  BigMovie,
+  MovieImg,
+  DetailTitle,
+  DetailOverview,
 } from './styled';
 import { makeImagePath } from 'lib/utils/common';
-import { AnimatePresence } from 'framer-motion';
+import { AnimatePresence, motion, useViewportScroll } from 'framer-motion';
+import { useNavigate, useMatch } from 'react-router-dom';
 
 const offset = 6;
 
 const HomePage = () => {
+  const navigate = useNavigate();
+  const detailMatch = useMatch('/movies/:movieId');
+  const { scrollY } = useViewportScroll();
   const [step, setStep] = useState(0);
   const { isLoading, data, isError } = useQuery(
     'fetchPlayingMovies',
@@ -35,6 +44,10 @@ const HomePage = () => {
     }
   };
 
+  const onClickBox = (movieId: number) => {
+    navigate(`/movies/${movieId}`);
+  };
+
   const sliderMovies = (() => {
     if (!data) return [];
 
@@ -47,6 +60,12 @@ const HomePage = () => {
   const {
     results: [{ title, overview, backdrop_path }],
   } = data!;
+
+  const clickedMovie =
+    detailMatch?.params.movieId &&
+    data?.results.find(
+      (movie) => String(movie.id) === detailMatch.params.movieId,
+    );
 
   return (
     <Wrapper>
@@ -66,11 +85,13 @@ const HomePage = () => {
           >
             {sliderMovies.map((movie) => (
               <Box
+                layoutId={movie.id + ''}
                 variants={boxVariants}
                 initial="normal"
                 whileHover="hover"
                 key={movie.id}
                 bgphoto={makeImagePath(movie.backdrop_path, 'w500')}
+                onClick={() => onClickBox(movie.id)}
               >
                 <BoxInfo variants={boxInfoVariants}>
                   <h4>{movie.title}</h4>
@@ -80,6 +101,24 @@ const HomePage = () => {
           </Row>
         </AnimatePresence>
       </Slider>
+      <AnimatePresence>
+        {detailMatch && (
+          <>
+            <Overlay onClick={() => navigate('/')} animate={{ opacity: 1 }} />
+            <BigMovie layoutId={detailMatch.params.movieId} top={scrollY.get()}>
+              {clickedMovie && (
+                <>
+                  <MovieImg
+                    src={makeImagePath(clickedMovie.backdrop_path, 'w500')}
+                  />
+                  <DetailTitle>{clickedMovie.title}</DetailTitle>
+                  <DetailOverview>{clickedMovie.overview}</DetailOverview>
+                </>
+              )}
+            </BigMovie>
+          </>
+        )}
+      </AnimatePresence>
     </Wrapper>
   );
 };

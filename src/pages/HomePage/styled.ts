@@ -2,9 +2,9 @@ import styled from 'styled-components';
 import { motion } from 'framer-motion';
 
 export const Wrapper = styled.div`
-  height: 200vh;
   background-color: black;
   overflow-x: hidden;
+  height: 200vh;
 `;
 
 export const Loading = styled.div`
@@ -40,7 +40,7 @@ export const Overview = styled.p`
 
 export const Slider = styled.div`
   position: relative;
-  top: -16%;
+  top: -300px;
 `;
 
 export const rowVariants = {
@@ -103,7 +103,7 @@ export const boxInfoVariants = {
 };
 
 export const BoxInfo = styled(motion.div)`
-  position: absolute;
+  position: fixed;
   padding: 10px;
   background-color: ${(props) => props.theme.black.lighter};
   opacity: 0;
@@ -114,4 +114,41 @@ export const BoxInfo = styled(motion.div)`
     font-size: 16px;
     color: white;
   }
+`;
+
+export const Overlay = styled(motion.div)`
+  position: absolute;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+`;
+
+export const BigMovie = styled(motion.div)<{ top: number }>`
+  position: absolute;
+  width: 40vw;
+  height: 80vh;
+  background-color: ${(props) => props.theme.black.lighter};
+  margin: 0 auto;
+  top: ${(props) => props.top};
+  right: 0;
+  left: 0;
+  border-radius: 15px;
+  overflow: hidden;
+`;
+
+export const MovieImg = styled.img`
+  width: 100%;
+  height: 400px;
+`;
+
+export const DetailTitle = styled.h1`
+  color: white;
+  position: relative;
+  top: -50px;
+  font-size: 24px;
+`;
+
+export const DetailOverview = styled.p`
+  color: white;
 `;
