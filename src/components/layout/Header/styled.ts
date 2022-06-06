@@ -69,7 +69,7 @@ export const Circle = styled(motion.span)`
   border-radius: 5px;
 `;
 
-export const Search = styled.span`
+export const Search = styled.form`
   cursor: pointer;
   color: white;
   display: flex;

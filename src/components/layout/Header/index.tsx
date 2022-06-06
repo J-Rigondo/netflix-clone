@@ -11,9 +11,15 @@ import {
   Input,
 } from './styled';
 import { motion, useViewportScroll, useAnimation } from 'framer-motion';
-import { useMatch } from 'react-router-dom';
+import { useMatch, useNavigate } from 'react-router-dom';
+import { useForm } from 'react-hook-form';
+
+interface IForm {
+  keyword: string;
+}
 
 const Header = () => {
+  const navigate = useNavigate();
   const homeMatch = useMatch('/');
   const tvMatch = useMatch('/tv');
   const [searchOpen, setSearchOpen] = useState(false);
@@ -33,6 +39,12 @@ const Header = () => {
       }
     });
   }, [scrollY, navAnimation]);
+
+  const { register, handleSubmit } = useForm<IForm>();
+  const onValid = (data: IForm) => {
+    console.log(data);
+    navigate(`/search?keyword=${data.keyword}`);
+  };
 
   return (
     <Nav animate={navAnimation} initial={{ backgroundColor: 'rgba(0,0,0,0)' }}>
@@ -66,12 +78,12 @@ const Header = () => {
         </Items>
       </Col>
       <Col ml="auto">
-        <Search>
+        <Search onSubmit={handleSubmit(onValid)}>
           <Input
-            onBlur={() => setSearchOpen(false)}
             animate={{ scaleX: searchOpen ? 1 : 0 }}
             transition={{ type: 'linear' }}
             placeholder="Search for movie or tv show..."
+            {...register('keyword', { required: true, minLength: 2 })}
           />
           <svg
             onClick={() => setSearchOpen((cur) => !cur)}
